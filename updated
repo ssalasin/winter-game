@@ -1,0 +1,118 @@
+ArrayList <snow> snowflake = new ArrayList <snow> ();
+float movement;
+float snowSize = 45;
+float snowXPos = width/2;
+float snowYPos = 550;
+
+void setup (){
+ size(1000,600); 
+
+}
+
+void draw (){
+  fill(#A9BCD3);
+  rect(0,0,width,height);
+  fill(255,255,255);
+  rect(0,560,width,100);
+  fill(#7C5C3E);
+  rect(100,490,40,70);
+  fill(#4D7C3E);
+  triangle(30,530,120,460,210,530);
+  triangle(45,500,120,440,195,500);
+  triangle(60,470,120,420,180,470);
+  triangle(75,440,120,400,165,440);
+  triangle(90,415,120,385,150,415);
+  snowman(snowSize,snowXPos,snowYPos);
+  snowXPos+=2.5*movement;
+   if (keyPressed == true){
+ if (key == CODED) { 
+    if (keyCode == RIGHT) {
+      movement = 1;
+    } if (keyCode == LEFT) {
+      movement = -1;
+    }
+ }
+  } else {
+    movement = 0;
+  }
+  if (frameCount % 6 == 0){
+    snowflake.add(new snow());
+  }
+  for (int i=snowflake.size()-1; i>=0; i--) {
+    snow s = snowflake.get(i); 
+    s.update();
+    s.display();
+  }
+  
+  
+}
+
+class snow {
+  PVector start, stop, current;
+  float move;
+  float speed;
+  float diameter = 6;
+ 
+  snow() {
+    start = new PVector(random(0,width), 0); //sets a random starting point on the top of the screen
+    stop = new PVector(start.x, 550);//sets the ending point as 550 pixels below the starting point
+    current = new PVector();
+    speed = random(0.003, 0.001); //picks speed
+  }
+ 
+  void update()  {
+    move += speed;
+      float ix = lerp(start.x, stop.x, move);
+      float iy = lerp(start.y, stop.y, move);
+      current.set(ix, iy, 0);
+  }
+      
+  void display () {
+    noStroke();
+          ellipse(current.x,current.y,diameter,diameter);
+    fill(255,255,255);
+  
+  }
+}
+
+void snowman (float size,float xPos,float yPos) {
+  if(size>34){
+ stroke(#93713A); 
+ line(xPos-size/3,yPos-0.75*size-size/15,xPos-0.75*size,yPos-size);
+ line(xPos+size/3,yPos-0.75*size-size/15,xPos+0.75*size,yPos-size);
+  }
+ noStroke();
+ fill(#E8E8E8);
+ellipse(xPos,yPos+(.05*size),size,size);
+ fill(255,255,255);
+ellipse(xPos,yPos,size,size);
+  if(size>24){
+ fill(#E8E8E8);
+ellipse(xPos,yPos-0.7*size,0.75*size,-0.75*size);
+fill(255,255,255);
+ellipse(xPos,yPos-0.75*size,0.75*size,-0.75*size);
+  }
+  if(size>28){
+fill(#E8E8E8);
+ellipse(xPos,yPos-0.7*size-(.75*(0.75*size)),.75*(0.75*size),.75*(0.75*size));
+fill(255,255,255);
+ellipse(xPos,yPos-0.75*size-(.75*(0.75*size)),0.75*(0.75*size),.75*(0.75*size));
+  }
+  if(size>42){
+fill(#BC2F22);
+ellipse(xPos,yPos-0.85*size,0.1*size,-0.1*size);
+  }
+  if(size>44){
+ellipse(xPos,yPos-0.65*size,0.1*size,-0.1*size);
+  }
+  if(size>38){
+fill(0,0,0);
+ellipse(xPos-(0.15*(.5625*size)),yPos-0.75*size-(.8*(0.75*size)),0.05*size,-0.05*size);
+ellipse(xPos+(0.15*(.5625*size)),yPos-0.75*size-(.8*(0.75*size)),0.05*size,-0.05*size);
+  }
+if(size>40){
+fill(#FA9B00);
+triangle(xPos,yPos-0.75*size-(.75*(0.75*size))+(size/10),xPos,yPos-0.75*size-(.75*(0.75*size))+(size/25),xPos+(size/6.25),yPos-0.75*size-(.75*(0.75*size))+(size/10)-(size/25));
+fill(255,255,255);
+}
+}
