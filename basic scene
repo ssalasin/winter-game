@@ -1,0 +1,75 @@
+ArrayList <snow> snowflake = new ArrayList <snow> ();
+
+
+void setup (){
+ size(800,600); 
+
+}
+
+void draw (){
+  fill(#A9BCD3);
+  rect(0,0,width,height);
+  fill(255,255,255);
+  rect(0,560,width,100);
+  fill(#7C5C3E);
+  rect(100,490,40,70); //center is 120
+  fill(#4D7C3E);
+  triangle(30,530,120,460,210,530);
+  triangle(45,500,120,440,195,500);
+  triangle(60,470,120,420,180,470);
+  triangle(75,440,120,400,165,440);
+  triangle(90,415,120,385,150,415);
+  snowman(50,400,550);
+  if (frameCount % 4 == 0) { //every four frames...
+    snowflake.add(new snow());
+  }
+  for (int i=snowflake.size()-1; i>=0; i--) {
+    snow s = snowflake.get(i); 
+    s.update();
+    s.display();
+  }
+  
+}
+
+class snow {
+  PVector start, stop, current;
+  float move;
+  float speed;
+  float diameter = 8;
+ 
+  snow() {
+    start = new PVector(random(0,width), 0); //sets a random starting point on the top of the screen
+    stop = new PVector(start.x, 550);//sets the ending point as 550 pixels below the starting point
+    current = new PVector();
+    speed = random(0.003, 0.001); //picks speed
+  }
+ 
+  void update()  {
+    move += speed;
+      float ix = lerp(start.x, stop.x, move);
+      float iy = lerp(start.y, stop.y, move);
+      current.set(ix, iy, 0);
+  }
+      
+  void display () {
+    noStroke();
+          ellipse(current.x,current.y,diameter,diameter);
+    fill(255,255,255);
+  
+  }
+}
+
+void snowman (int size,int xPos,int yPos) {
+ fill(#E8E8E8);
+ellipse(xPos,yPos+(.05*size),size,size);
+ fill(255,255,255);
+ellipse(xPos,yPos,size,size);
+ fill(#E8E8E8);
+ellipse(xPos,yPos-0.7*size,0.75*size,-0.75*size);
+fill(255,255,255);
+ellipse(xPos,yPos-0.75*size,0.75*size,-0.75*size);
+fill(#E8E8E8);
+ellipse(xPos,yPos-0.7*size-(.75*(0.75*size)),.75*(0.75*size),.75*(0.75*size));
+fill(255,255,255);
+ellipse(xPos,yPos-0.75*size-(.75*(0.75*size)),0.75*(0.75*size),.75*(0.75*size));
+}
